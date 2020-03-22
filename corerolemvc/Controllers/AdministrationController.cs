@@ -19,5 +19,10 @@ namespace corerolemvc.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult CreateRole()
+        {
+            return View();
+        }
     }
 }
