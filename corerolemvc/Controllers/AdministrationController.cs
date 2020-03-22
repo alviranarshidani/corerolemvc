@@ -55,6 +55,7 @@ namespace corerolemvc.Controllers
         public IActionResult ListRoles()
         {
             var roles = roleManager.Roles;
+
             return View(roles);
         }
     }
