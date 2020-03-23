@@ -1,9 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-corerolemvc-04AB2356-2B48-4B61-8B87-4287F8299798</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="wwwroot\ViewModels\CreateRoleViewModel.cs" />
+  </ItemGroup>
 
 
   <ItemGroup>
