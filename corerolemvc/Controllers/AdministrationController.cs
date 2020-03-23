@@ -64,7 +64,7 @@ namespace corerolemvc.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditRoles(string id)
+        public async Task<IActionResult> EditRole(string id)
         {
             var role = await roleManager.FindByIdAsync(id);
 
@@ -88,6 +88,35 @@ namespace corerolemvc.Controllers
                     model.Users.Add(user.UserName);
                 }
             }
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditRole(EditRoleViewModel model)
+        {
+            var role = await roleManager.FindByIdAsync(model.Id);
+
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"Role with Id = {model.Id} cannot be found";
+                return View("Not Found");
+            }
+            else
+            {
+                role.Name = model.RoleName;
+                var result = await roleManager.UpdateAsync(role);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListRoles");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
             return View(model);
         }
     }
