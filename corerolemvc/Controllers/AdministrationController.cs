@@ -115,8 +115,45 @@ namespace corerolemvc.Controllers
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
+                return View(model);
+            }            
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditUsersInRole(string roleId)
+        {
+            ViewBag.roleId = roleId;
+
+            var role = await roleManager.FindByIdAsync(roleId);
+
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"Role with Id = {roleId} cannot be found";
+                return View("Not Found");
             }
 
+            var model = new List<UserRoleViewModel>();
+
+            foreach (var user in userManager.Users)
+            {
+                var userRoleViewModel = new UserRoleViewModel
+                {
+                    UserId = user.Id,
+                    UserName = user.UserName
+                };
+
+                if (await userManager.IsInRoleAsync(user,role.Name))
+                {
+                    userRoleViewModel.IsSelected = true;
+                }
+                else
+                {
+                    userRoleViewModel.IsSelected = false;
+                }
+
+                model.Add(userRoleViewModel);
+
+            }
             return View(model);
         }
     }
