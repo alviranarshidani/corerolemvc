@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace corerolemvc.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class EmployeesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -46,6 +46,7 @@ namespace corerolemvc.Controllers
         }
 
         // GET: Employees/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -56,6 +57,7 @@ namespace corerolemvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("EmployeeId,FullName,EmpCode,Position,OfficeLocation")] Employee employee)
         {
             if (ModelState.IsValid)
